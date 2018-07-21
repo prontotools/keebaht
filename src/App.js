@@ -4,7 +4,7 @@ import 'semantic-ui-css/semantic.min.css'
 // import Main from './Main'
 import Billing from './Billing'
 // import Amount from './Amount'
-// import Summary from './Summary'
+import Summary from './Summary'
 
 class App extends Component {
   render() {
@@ -14,7 +14,7 @@ class App extends Component {
           {/* <Route path="/" component={Main} /> */}
           <Route path="/billing" component={Billing} />
           {/* <Route path="/amount" component={Amount} /> */}
-          {/* <Route path="/summary" component={Summary} /> */}
+          <Route path="/summary" component={Summary} />
         </Switch>
       </BrowserRouter>
     )
