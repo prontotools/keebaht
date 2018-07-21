@@ -7,7 +7,7 @@ class Main extends Component {
             <div className="margin-main">
                 <h1 className="ui center aligned header">Keebaht ?</h1>
                 <div className="ui container shadow">
-                    <div class="ui two steps">
+                    <div class="ui two steps no-border">
                         
                         <div className="step">
                                 <a href="/Billing">

@@ -9,3 +9,7 @@ body {
 .shadow {
     box-shadow: 0 0 2rem rgba(0,0,0,.1);
 }
+
+.no-border {
+    border: 0px !important;
+}
