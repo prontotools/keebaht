@@ -8,7 +8,7 @@ class Main extends Component {
                 <h1 className="ui center aligned header">Keebaht ?</h1>
                 <div className="ui container shadow">
                     <div class="ui two steps no-border">
-                        
+
                         <div className="step">
                                 <a href="/Billing">
                                     <div className="content">
@@ -27,9 +27,9 @@ class Main extends Component {
                                     <div className="description">Show you have to pay Keebaht</div>
                                 </div>
                             </a>
-                        </div> 
                         </div>
-                       
+                        </div>
+
                     </div>
                 </div>
         )
