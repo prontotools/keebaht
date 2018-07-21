@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { BrowserRouter, Route, Switch } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import 'semantic-ui-css/semantic.min.css'
 import './style.css'
 
@@ -11,14 +11,14 @@ import Summary from './Summary'
 class App extends Component {
   render() {
     return (
-      <BrowserRouter>
+      <Router>
         <Switch>
-          <Route path="/" component={Main} />
+          <Route exact path="/" component={Main} />
           <Route path="/billing" component={Billing} />
           {/* <Route path="/amount" component={Amount} /> */}
           <Route path="/summary" component={Summary} />
         </Switch>
-      </BrowserRouter>
+      </Router>
     )
   }
 }
