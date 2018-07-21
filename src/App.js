@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-import { Route, Switch } from 'react-router-dom'
+import { Router, Route, Switch } from 'react-router-dom'
 import 'semantic-ui-css/semantic.min.css'
-import Main from './Main'
+// import Main from './Main'
 // import Billing from './Billing'
 // import Amount from './Amount'
 // import Summary from './Summary'
@@ -10,16 +10,16 @@ import Main from './Main'
 class App extends Component {
   render() {
     return (
-      <Switch>
-        <Route path="/" component={Main} />
-        {/* <Route path="/Billing" component={Billing} /> */}
-        {/* <Route path="/Amount" component={Amount} /> */}
-        {/* <Route path="/Summary" component={Summary} /> */}
+      <BrowserRouter>
+        <Switch>
+          {/* <Route path="/" component={Main} /> */}
+          {/* <Route path="/Billing" component={Billing} /> */}
+          {/* <Route path="/Amount" component={Amount} /> */}
+          {/* <Route path="/Summary" component={Summary} /> */}
 
-      </Switch>
-
+        </Switch>
+      </BrowserRouter>
     )
   }
 }
-
 export default App
