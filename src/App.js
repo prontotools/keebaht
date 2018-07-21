@@ -1,13 +1,12 @@
 import React, { Component } from 'react'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import 'semantic-ui-css/semantic.min.css'
-import Main from './Main'
 import './style.css'
 
-// import Billing from './Billing'
+import Main from './Main'
+import Billing from './Billing'
 // import Amount from './Amount'
-// import Summary from './Summary'
-
+import Summary from './Summary'
 
 class App extends Component {
   render() {
@@ -15,13 +14,13 @@ class App extends Component {
       <BrowserRouter>
         <Switch>
           <Route path="/" component={Main} />
-          {/* <Route path="/Billing" component={Billing} /> */}
-          {/* <Route path="/Amount" component={Amount} /> */}
-          {/* <Route path="/Summary" component={Summary} /> */}
-
+          <Route path="/billing" component={Billing} />
+          {/* <Route path="/amount" component={Amount} /> */}
+          <Route path="/summary" component={Summary} />
         </Switch>
       </BrowserRouter>
     )
   }
 }
+
 export default App
