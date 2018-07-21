@@ -5,7 +5,6 @@ import 'semantic-ui-css/semantic.min.css'
 import Billing from './Billing'
 // import Amount from './Amount'
 // import Summary from './Summary'
-import { db } from './firebase'
 
 class App extends Component {
   render() {
