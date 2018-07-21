@@ -5,3 +5,7 @@
 body {
     font-family: 'Montserrat', sans-serif !important;
 }
+
+.shadow {
+    box-shadow: 0 0 2rem rgba(0,0,0,.1);
+}
