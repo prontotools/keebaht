@@ -5,7 +5,7 @@ class Amount extends Component {
   state = {
     username:'',
     menu: [],
-    amountToPay: 0,
+    amountToPay: 0
   }
 
   componentDidMount() {
@@ -15,7 +15,9 @@ class Amount extends Component {
             menu: [{
               name: doc.data().name,
               amount: doc.data().amount,
-              price: doc.data().price
+              total: doc.data().total,
+              unitPrice: doc.data().unitPrice,
+              yourAmount: 0
             }, ...prevState.menu]
           }))
       });
@@ -24,14 +26,19 @@ class Amount extends Component {
 
   handleOnChange = (menuIndex, e) => {
     const amount = e.target.value
-    this.setState({
-
-    })
+    this.computePrice(menuIndex, amount)
   }
 
-  computePrice = () => {
+  computePrice = (menuIndex, amount) => {
+    this.state.menu[menuIndex].yourAmount = amount
+    const newArray = this.state.menu.map((menu) => (
+      menu.unitPrice * menu.yourAmount
+    ))
     this.setState({
-      amountToPay: 0
+      amountToPay: newArray.reduce(
+        (accumulator, currentValue) => accumulator + currentValue,
+        0
+      )
     })
   }
 
@@ -55,12 +62,14 @@ class Amount extends Component {
   render() {
     return (
       <div>
-        <h1>Keebaht?</h1>
+        <h1>กี่บาท?</h1>
         <h2>Who?
-          <input
+        <div class="ui input focus">
+        <input
             type="text"
             onChange={this.handleWho}
           />
+        </div>
         </h2>
         <table class="ui olive table">
           <thead>
@@ -74,17 +83,19 @@ class Amount extends Component {
             <tr>
               <td>{menu.name}</td>
               <td>
-                <input
-                  type="text"
-                  onChange={ (e) => this.handleOnChange(index, e) }
-                />
+                <div class="ui input focus">
+                  <input
+                    type="text"
+                    onChange={ (e) => this.handleOnChange(index, e) }
+                  />
+                </div>
               </td>
             </tr>
           ))}
           </tbody>
           <tfoot>
             <tr>
-              <td>Subtotal</td>
+              <td>Total</td>
               <td>{this.state.amountToPay}</td>
             </tr>
           </tfoot>
