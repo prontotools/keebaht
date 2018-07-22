@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { db } from './firebase'
-import './style.css'
+import Header from './Header'
 
 class Summary extends Component {
     state = {
@@ -24,7 +24,7 @@ class Summary extends Component {
     render() {
         return (
             <div className="margin-main">
-                <h1 className="ui center aligned header">กี่บาท?</h1>
+                <Header />
                 <div className="ui container">
                     <div class="ui three column grid stackable">
                         {
