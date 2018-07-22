@@ -7,7 +7,7 @@ body {
 }
 
 .shadow {
-    box-shadow: 0 0 2rem rgba(0,0,0,.1);
+    box-shadow: 0 0 2rem rgba(0,0,0,.1) !important;
 }
 
 .no-border {
@@ -20,4 +20,18 @@ body {
 
 .head-space {
     margin-top : 10px;
+}
+
+.price {
+    font-size: 20px;
+    color: #3aa7ff;
+}
+
+.card-section {
+    padding: 15px !important;
+}
+
+.pay-username{
+    color: grey;
+    line-height: 2em;
 }
