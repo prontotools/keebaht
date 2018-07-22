@@ -48,7 +48,8 @@ class Billing extends Component {
     db.collection('menus').add({
       name: this.state.name,
       amount: +this.state.amount,
-      total: +this.state.total
+      total: +this.state.total,
+      unitPrice: +this.state.total / +this.state.amount
     })
   }
 
