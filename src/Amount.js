@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Redirect } from 'react-router-dom'
 import { assoc, when, map, propEq } from 'ramda'
-import { Container, Form, Input } from 'semantic-ui-react'
+import { Container, Button, Form, Input } from 'semantic-ui-react'
 import Header from './Header'
 import { db } from './firebase'
 
@@ -108,18 +108,20 @@ class Amount extends Component {
                     <Form.Input
                       onChange={this.handleWho}
                       label="Who?"
+                      transparent
                     />
                   ):
                     <Form.Input
                       onChange={this.handleWho}
                       error
                       label="Who?"
+                      transparent
                     />
                   }
                 </Form.Field>
               </Form.Group>
             </Form>
-            <table class="ui olive table">
+            <table class="ui shadow table">
               <thead>
                 <tr>
                   <th>Menu</th>
@@ -148,12 +150,14 @@ class Amount extends Component {
                 </tr>
               </tfoot>
             </table>
-              <button
-                class="ui secondary button"
-                onClick={this.handleOkay}
-              >
-                Okay
-              </button>
+            <Button
+              floated='right'
+              size='big'
+              color='grey'
+              onClick={this.handleOkay}
+            >
+              Okay
+            </Button>
           </div>
         </Container>
       </div>
