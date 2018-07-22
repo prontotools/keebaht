@@ -8,12 +8,12 @@ class Main extends Component {
       <div className="margin-main">
         <h1 className="ui center aligned header">กี่บาท?</h1>
         <div className="ui container shadow">
-          <div class="ui two steps no-border">
+          <div class="ui three steps no-border">
             <div className="step">
               <Link to="/billing">
-                <div className="content">
-                  <img src="https://image.flaticon.com/icons/svg/942/942803.svg" width="50px;"/>
-                  <div className="title">Billing</div>
+                <div className="content center-content">
+                  <img src="https://image.flaticon.com/icons/svg/945/945935.svg" width="50px;"/>
+                  <div className="title head-space">Billing</div>
                   <div className="description">Enter billing information</div>
                 </div>
               </Link>
@@ -21,10 +21,20 @@ class Main extends Component {
 
             <div className="step">
               <Link to="/amount">
-                <div className="content">
-                  <img src="https://image.flaticon.com/icons/svg/945/945971.svg" width="50px;"/>
-                  <div className="title">Keebaht</div>
+                <div className="content center-content">
+                  <img src="https://image.flaticon.com/icons/svg/945/945920.svg" width="50px;"/>
+                  <div className="title head-space">Keebaht</div>
                   <div className="description">Show you have to pay Keebaht</div>
+                </div>
+              </Link>
+            </div>
+
+            <div className="step">
+              <Link to="/summary">
+                <div className="content center-content">
+                  <img src="https://image.flaticon.com/icons/svg/945/945929.svg" width="50px;"/>
+                  <div className="title head-space">Summary</div>
+                  <div className="description">Show your summaryKeebaht</div>
                 </div>
               </Link>
             </div>
