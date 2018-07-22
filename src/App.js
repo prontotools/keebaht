@@ -5,7 +5,7 @@ import './style.css'
 
 import Main from './Main'
 import Billing from './Billing'
-// import Amount from './Amount'
+import Amount from './Amount'
 import Summary from './Summary'
 
 class App extends Component {
@@ -15,7 +15,7 @@ class App extends Component {
         <Switch>
           <Route exact path="/" component={Main} />
           <Route path="/billing" component={Billing} />
-          {/* <Route path="/amount" component={Amount} /> */}
+          <Route path="/amount" component={Amount} />
           <Route path="/summary" component={Summary} />
         </Switch>
       </Router>
