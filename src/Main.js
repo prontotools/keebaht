@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
+import OverallProgress from './OverallProgress'
 import Header from './Header'
 
 class Main extends Component {
@@ -40,6 +41,7 @@ class Main extends Component {
             </div>
           </div>
         </div>
+        <OverallProgress />
       </div>
     )
   }
