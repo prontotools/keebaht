@@ -13,3 +13,11 @@ body {
 .no-border {
     border: 0px !important;
 }
+
+.center-content{
+    text-align: center;
+}
+
+.head-space {
+    margin-top : 10px;
+}
