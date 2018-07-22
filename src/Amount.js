@@ -15,7 +15,8 @@ class Amount extends Component {
             menu: [{
               name: doc.data().name,
               amount: doc.data().amount,
-              price: doc.data().price
+              total: doc.data().total,
+              yourAmount: 0
             }, ...prevState.menu]
           }))
       });
@@ -24,14 +25,17 @@ class Amount extends Component {
 
   handleOnChange = (menuIndex, e) => {
     const amount = e.target.value
-    this.setState({
-
-    })
+    console.log(menuIndex)
+    this.computePrice(menuIndex, amount)
   }
 
-  computePrice = () => {
-    this.setState({
-      amountToPay: 0
+  computePrice = (menuIndex, amount) => {
+    console.log(this.state.menu[menuIndex])
+    this.state.menu[menuIndex].yourAmount = amount
+    console.log(this.state.menu[menuIndex])
+    this.state.menu.map((menu) => {
+
+      <React.Fragment>{menu}{console.log(menu.total * menu.yourAmount)}</React.Fragment>
     })
   }
 
@@ -57,10 +61,12 @@ class Amount extends Component {
       <div>
         <h1>Keebaht?</h1>
         <h2>Who?
-          <input
+        <div class="ui input focus">
+        <input
             type="text"
             onChange={this.handleWho}
           />
+        </div>
         </h2>
         <table class="ui olive table">
           <thead>
@@ -74,17 +80,19 @@ class Amount extends Component {
             <tr>
               <td>{menu.name}</td>
               <td>
-                <input
-                  type="text"
-                  onChange={ (e) => this.handleOnChange(index, e) }
-                />
+                <div class="ui input focus">
+                  <input
+                    type="text"
+                    onChange={ (e) => this.handleOnChange(index, e) }
+                  />
+                </div>
               </td>
             </tr>
           ))}
           </tbody>
           <tfoot>
             <tr>
-              <td>Subtotal</td>
+              <td>Total</td>
               <td>{this.state.amountToPay}</td>
             </tr>
           </tfoot>
