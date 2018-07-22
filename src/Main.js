@@ -6,7 +6,7 @@ class Main extends Component {
   render() {
     return(
       <div className="margin-main">
-        <h1 className="ui center aligned header">Keebaht?</h1>
+        <h1 className="ui center aligned header">กี่บาท?</h1>
         <div className="ui container shadow">
           <div class="ui two steps no-border">
             <div className="step">
