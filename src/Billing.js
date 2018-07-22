@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Container, Form, Header, Table } from 'semantic-ui-react'
+import { db } from './firebase'
 
 class Billing extends Component {
   state = {
@@ -7,7 +8,7 @@ class Billing extends Component {
     amount: '',
     total: '',
     sumTotal: 0,
-    items: []
+    menus: []
   }
 
   handleName = (e) => {
@@ -31,7 +32,7 @@ class Billing extends Component {
   handleSubmit = () => {
     this.setState(prevState => ({
       sumTotal: prevState.sumTotal + +this.state.total,
-      items: prevState.items.concat({
+      menus: prevState.menus.concat({
         name: this.state.name,
         amount: this.state.amount,
         total: this.state.total
@@ -42,6 +43,28 @@ class Billing extends Component {
       name: '',
       amount: '',
       total: ''
+    })
+  }
+
+  componentDidMount() {
+    db.collection('menus').get().then(querySnapshot => {
+      let sumTotal = 0
+      querySnapshot.forEach(doc => {
+        this.setState(prevState => ({
+          menus: [
+            ...prevState.menus,
+            {
+              name: doc.data().name,
+              amount: doc.data().amount,
+              total: doc.data().total
+            }
+          ]
+        }))
+        sumTotal += doc.data().total
+      })
+      this.setState({
+        sumTotal
+      })
     })
   }
 
@@ -82,7 +105,7 @@ class Billing extends Component {
           </Table.Header>
           <Table.Body>
             {
-              this.state.items.map(item => (
+              this.state.menus.map(item => (
                 <Table.Row>
                   <Table.Cell>{item.name}</Table.Cell>
                   <Table.Cell>{item.amount}</Table.Cell>
