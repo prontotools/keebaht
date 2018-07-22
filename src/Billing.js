@@ -53,8 +53,12 @@ class Billing extends Component {
   }
 
   componentDidMount() {
-    db.collection('menus').get().then(querySnapshot => {
+    db.collection('menus').onSnapshot(querySnapshot => {
+      this.setState({
+        menus: []
+      })
       let sumTotal = 0
+
       querySnapshot.forEach(doc => {
         this.setState(prevState => ({
           menus: [
@@ -68,6 +72,7 @@ class Billing extends Component {
         }))
         sumTotal += doc.data().total
       })
+
       this.setState({
         sumTotal
       })
