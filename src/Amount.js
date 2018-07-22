@@ -5,7 +5,7 @@ class Amount extends Component {
   state = {
     username:'',
     menu: [],
-    amountToPay: 0,
+    amountToPay: 0
   }
 
   componentDidMount() {
@@ -16,6 +16,7 @@ class Amount extends Component {
               name: doc.data().name,
               amount: doc.data().amount,
               total: doc.data().total,
+              unitPrice: doc.data().unitPrice,
               yourAmount: 0
             }, ...prevState.menu]
           }))
@@ -25,17 +26,19 @@ class Amount extends Component {
 
   handleOnChange = (menuIndex, e) => {
     const amount = e.target.value
-    console.log(menuIndex)
     this.computePrice(menuIndex, amount)
   }
 
   computePrice = (menuIndex, amount) => {
-    console.log(this.state.menu[menuIndex])
     this.state.menu[menuIndex].yourAmount = amount
-    console.log(this.state.menu[menuIndex])
-    this.state.menu.map((menu) => {
-
-      <React.Fragment>{menu}{console.log(menu.total * menu.yourAmount)}</React.Fragment>
+    const newArray = this.state.menu.map((menu) => (
+      menu.unitPrice * menu.yourAmount
+    ))
+    this.setState({
+      amountToPay: newArray.reduce(
+        (accumulator, currentValue) => accumulator + currentValue,
+        0
+      )
     })
   }
 
@@ -59,7 +62,7 @@ class Amount extends Component {
   render() {
     return (
       <div>
-        <h1>Keebaht?</h1>
+        <h1>กี่บาท?</h1>
         <h2>Who?
         <div class="ui input focus">
         <input
