@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
+import { assoc, when, map, propEq } from 'ramda'
 import { Container, Form, Input } from 'semantic-ui-react'
 import Header from './Header'
 import { db } from './firebase'
@@ -7,7 +8,7 @@ import { db } from './firebase'
 class Amount extends Component {
   state = {
     username:'',
-    menu: [],
+    menus: [],
     amountToPay: 0
   }
 
@@ -15,29 +16,38 @@ class Amount extends Component {
     db.collection('menus').get().then(querySnapshot => {
       querySnapshot.forEach(doc => {
         this.setState(prevState => ({
-          menu: [
+          menus: [
             {
+              id: doc.id,
               name: doc.data().name,
               amount: doc.data().amount,
               total: doc.data().total,
               unitPrice: doc.data().unitPrice,
               yourAmount: 0
             },
-            ...prevState.menu
+            ...prevState.menus
           ]
         }))
       });
     });
   }
 
-  handleOnChange = (menuIndex, e) => {
-    const amount = e.target.value
-    this.computePrice(menuIndex, amount)
+  handleOnChange = (menuId, e) => {
+    const amount = +e.target.value
+    this.computePrice(menuId, amount)
   }
 
-  computePrice = (menuIndex, amount) => {
-    this.state.menu[menuIndex].yourAmount = amount
-    const newArray = this.state.menu.map((menu) => (
+  computePrice = (menuId, amount) => {
+    const currentMenu = this.state.menus
+    const alter = (key, value, items) => map(
+      when(propEq('id', key), assoc('yourAmount', value)),
+      items
+    )
+    const newMenu = alter(menuId, amount, currentMenu)
+    this.setState({
+      menus: newMenu
+    })
+    const newArray = newMenu.map(menu => (
       menu.unitPrice * menu.yourAmount
     ))
     this.setState({
@@ -54,7 +64,7 @@ class Amount extends Component {
       name: this.state.username,
       date_create: new Date(),
       amount: this.state.amountToPay,
-      menu: this.state.menu
+      menus: this.state.menus
     })
   }
 
@@ -89,14 +99,14 @@ class Amount extends Component {
                 </tr>
               </thead>
               <tbody>
-              {this.state.menu.map((menu, index) =>(
+              {this.state.menus.map((menu) =>(
                 <tr>
                   <td>{menu.name}</td>
                   <td>
                     <div class="ui input focus">
                       <input
                         type="text"
-                        onChange={ (e) => this.handleOnChange(index, e) }
+                        onChange={e => this.handleOnChange(menu.id, e) }
                       />
                     </div>
                   </td>
