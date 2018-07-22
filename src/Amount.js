@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
+import { Redirect } from 'react-router-dom'
 import { assoc, when, map, propEq } from 'ramda'
 import { Container, Form, Input } from 'semantic-ui-react'
 import Header from './Header'
@@ -7,9 +7,11 @@ import { db } from './firebase'
 
 class Amount extends Component {
   state = {
-    username:'',
+    username: '',
     menus: [],
-    amountToPay: 0
+    amountToPay: 0,
+    error: false,
+    redirect: false
   }
 
   componentDidMount() {
@@ -59,13 +61,21 @@ class Amount extends Component {
   }
 
   handleOkay = () => {
-    console.log('okay')
-    db.collection('payers').add({
-      name: this.state.username,
-      date_create: new Date(),
-      amount: this.state.amountToPay,
-      menus: this.state.menus
-    })
+    if (this.state.username === '') {
+      this.setState({
+        error: true
+      })
+    } else {
+      db.collection('payers').add({
+        name: this.state.username,
+        date_create: new Date(),
+        amount: this.state.amountToPay,
+        menus: this.state.menus
+      })
+      this.setState({
+        redirect: true
+      })
+    }
   }
 
   handleWho = e => {
@@ -73,9 +83,19 @@ class Amount extends Component {
     this.setState({
       username
     })
+    if (this.state.error) {
+      this.setState({
+        error: false
+      })
+    }
   }
 
   render() {
+    const { redirect } = this.state
+
+    if (redirect) {
+      return <Redirect to='/summary'/>
+    }
     return (
       <div className="margin-main">
         <Header />
@@ -84,10 +104,18 @@ class Amount extends Component {
             <Form>
               <Form.Group inline>
                 <Form.Field>
-                  <label>Who?</label>
-                  <Input
-                    onChange={this.handleWho}
-                  />
+                   {!this.state.error?(
+                    <Form.Input
+                      onChange={this.handleWho}
+                      label="Who?"
+                    />
+                  ):
+                    <Form.Input
+                      onChange={this.handleWho}
+                      error
+                      label="Who?"
+                    />
+                  }
                 </Form.Field>
               </Form.Group>
             </Form>
@@ -120,14 +148,12 @@ class Amount extends Component {
                 </tr>
               </tfoot>
             </table>
-            <Link to='/summary'>
               <button
                 class="ui secondary button"
                 onClick={this.handleOkay}
               >
                 Okay
               </button>
-            </Link>
           </div>
         </Container>
       </div>
