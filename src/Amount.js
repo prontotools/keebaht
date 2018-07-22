@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
 import { db } from './firebase'
 
 class Amount extends Component {
@@ -47,7 +48,8 @@ class Amount extends Component {
     db.collection("payers").add({
       name: this.state.username,
       date_create: new Date(),
-      amount: this.state.amountToPay
+      amount: this.state.amountToPay,
+      menu: this.state.menu
     })
   }
 
@@ -100,12 +102,14 @@ class Amount extends Component {
             </tr>
           </tfoot>
         </table>
-        <button
-          class="ui secondary button"
-          onClick={this.handleOkay}
-        >
-          Okay
-        </button>
+        <Link to='/summary'>
+          <button
+            class="ui secondary button"
+            onClick={this.handleOkay}
+          >
+            Okay
+          </button>
+        </Link>
       </div>
     )
   }
