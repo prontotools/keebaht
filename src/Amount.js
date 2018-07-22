@@ -109,6 +109,7 @@ class Amount extends Component {
                       onChange={this.handleWho}
                       label="Who?"
                       transparent
+                      placeholder='Your Name...'
                     />
                   ):
                     <Form.Input
@@ -116,6 +117,7 @@ class Amount extends Component {
                       error
                       label="Who?"
                       transparent
+                      placeholder='Your Name...'
                     />
                   }
                 </Form.Field>
