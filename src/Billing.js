@@ -44,6 +44,12 @@ class Billing extends Component {
       amount: '',
       total: ''
     })
+
+    db.collection('menus').add({
+      name: this.state.name,
+      amount: +this.state.amount,
+      total: +this.state.total
+    })
   }
 
   componentDidMount() {
