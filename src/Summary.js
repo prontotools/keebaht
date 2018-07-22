@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { db } from './firebase'
+import { Confirm } from 'semantic-ui-react'
 
 import './style.css'
 import Header from './Header'
@@ -7,6 +8,7 @@ import Header from './Header'
 class Summary extends Component {
   state = {
     payers: [],
+    open: false,
   }
 
   componentDidMount() {
@@ -24,8 +26,10 @@ class Summary extends Component {
     })
   }
 
+  open = () => this.setState({ open: true })
+  close = () => this.setState({ open: false })
+
   render() {
-    console.log(this.state.payers)
     return (
       <div className="margin-main">
         <Header />
@@ -36,7 +40,9 @@ class Summary extends Component {
                 <div className="column" key={payer}>
                   <div className="shadow ui card link card-section fluid">
                     <div className="content">
-                      <h3 className="pay-username">{payer.username.toUpperCase()}</h3>
+                      <h3 className="pay-username">{payer.username === '' ? 'Anonymous' : payer.username.toUpperCase()}
+                        <i class="trash-hover trash icon right floated" onClick={this.open} />
+                      </h3>
                       <div className="ui description">
                         <div className="ui divided list">
                           {payer.menus.map(item => (
@@ -64,6 +70,7 @@ class Summary extends Component {
             }
           </div>
         </div>
+        <Confirm open={this.state.open} onCancel={this.close} onConfirm={this.close} />
       </div>
     )
   }

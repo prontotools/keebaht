@@ -35,3 +35,7 @@ body {
     color: grey;
     line-height: 2em;
 }
+
+.trash-hover:hover{
+    color: red;
+}
