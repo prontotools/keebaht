@@ -25,6 +25,7 @@ class Summary extends Component {
   }
 
   render() {
+    console.log(this.state.payers)
     return (
       <div className="margin-main">
         <Header />
@@ -41,7 +42,7 @@ class Summary extends Component {
                           {payer.menus.map(item => (
                             <div className="item">
                               <div className="right floated content">
-                                <div className="meta">{item.total} x {item.amount} = {item.total * item.amount}</div>
+                                <div className="meta">{item.unitPrice} x {item.yourAmount} = {item.unitPrice * item.yourAmount}</div>
                               </div>
                               <div className="meta">
                                 {item.name}
