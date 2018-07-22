@@ -40,15 +40,16 @@ class Summary extends Component {
                       <div className="ui description">
                         <div className="ui divided list">
                           {payer.menus.map(item => (
-                            <div className="item">
-                              <div className="right floated content">
-                                <div className="meta">{item.unitPrice} x {item.yourAmount} = {item.unitPrice * item.yourAmount}</div>
+                            item.yourAmount !== 0 && (
+                              <div className="item">
+                                <div className="right floated content">
+                                  <div className="meta">{item.unitPrice} x {item.yourAmount} = {item.unitPrice * item.yourAmount}</div>
+                                </div>
+                                <div className="meta">
+                                  {item.name}
+                                </div>
                               </div>
-                              <div className="meta">
-                                {item.name}
-                              </div>
-                            </div>
-                          ))}
+                            )))}
                         </div>
                       </div>
                     </div>
