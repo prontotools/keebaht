@@ -36,7 +36,7 @@ class OverallProgress extends Component {
           let currentAmount = 0
           payers.forEach(payer => {
             const matchedMenu = payer.menus.filter(eachMenu => eachMenu.id === menu.id)
-            currentAmount += matchedMenu[0].yourAmount
+            currentAmount += matchedMenu[0] ? matchedMenu[0].yourAmount : 0
           })
           this.setState(prevState => ({
             menus: [
@@ -72,7 +72,11 @@ class OverallProgress extends Component {
               this.state.menus.map(item => (
                 <Table.Row>
                   <Table.Cell>{item.name}</Table.Cell>
-                  <Table.Cell>{item.currentAmount}/{item.totalAmount}</Table.Cell>
+                  <Table.Cell
+                    style={
+                      item.currentAmount > item.totalAmount ? { color: 'red' } : item.currentAmount === item.totalAmount ? { color: 'green' } : {}
+                    }
+                  >{item.currentAmount}/{item.totalAmount}</Table.Cell>
                 </Table.Row>
               ))
             }
