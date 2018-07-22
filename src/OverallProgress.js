@@ -10,6 +10,9 @@ class OverallProgress extends Component {
   componentDidMount() {
     let menus = []
     db.collection('menus').onSnapshot(querySnapshot => {
+      this.setState({
+        menus: []
+      })
       querySnapshot.forEach(doc => {
         menus = [
           ...menus,
