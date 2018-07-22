@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import { Container, Form, Header, Table } from 'semantic-ui-react'
-import { default as AppHeader } from './Header'
+import { Container, Form, Table } from 'semantic-ui-react'
+import Header from './Header'
 import { db } from './firebase'
 
 class Billing extends Component {
@@ -84,7 +84,7 @@ class Billing extends Component {
   render() {
     return (
       <div className="margin-main">
-        <AppHeader />
+        <Header />
         <Container text>
           <Form onSubmit={this.handleSubmit}>
             <Form.Group widths='equal'>
