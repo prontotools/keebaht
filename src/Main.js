@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
-import './style.css'
+import Header from './Header'
 
 class Main extends Component {
   render() {
     return(
       <div className="margin-main">
-        <h1 className="ui center aligned header">กี่บาท?</h1>
+        <Header />
         <div className="ui container shadow">
           <div class="ui three steps no-border">
             <div className="step">

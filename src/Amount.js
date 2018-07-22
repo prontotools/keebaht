@@ -1,46 +1,60 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
+import { Container, Form, Input } from 'semantic-ui-react'
+import Header from './Header'
 import { db } from './firebase'
 
 class Amount extends Component {
   state = {
     username:'',
     menu: [],
-    amountToPay: 0,
+    amountToPay: 0
   }
 
   componentDidMount() {
-    db.collection("menus").get().then((querySnapshot) => {
-      querySnapshot.forEach((doc) => {
-          this.setState(prevState => ({
-            menu: [{
+    db.collection('menus').get().then(querySnapshot => {
+      querySnapshot.forEach(doc => {
+        this.setState(prevState => ({
+          menu: [
+            {
               name: doc.data().name,
               amount: doc.data().amount,
-              price: doc.data().price
-            }, ...prevState.menu]
-          }))
+              total: doc.data().total,
+              unitPrice: doc.data().unitPrice,
+              yourAmount: 0
+            },
+            ...prevState.menu
+          ]
+        }))
       });
     });
   }
 
   handleOnChange = (menuIndex, e) => {
     const amount = e.target.value
-    this.setState({
-
-    })
+    this.computePrice(menuIndex, amount)
   }
 
-  computePrice = () => {
+  computePrice = (menuIndex, amount) => {
+    this.state.menu[menuIndex].yourAmount = amount
+    const newArray = this.state.menu.map((menu) => (
+      menu.unitPrice * menu.yourAmount
+    ))
     this.setState({
-      amountToPay: 0
+      amountToPay: newArray.reduce(
+        (accumulator, currentValue) => accumulator + currentValue,
+        0
+      )
     })
   }
 
   handleOkay = () => {
     console.log('okay')
-    db.collection("payers").add({
+    db.collection('payers').add({
       name: this.state.username,
       date_create: new Date(),
-      amount: this.state.amountToPay
+      amount: this.state.amountToPay,
+      menu: this.state.menu
     })
   }
 
@@ -51,50 +65,61 @@ class Amount extends Component {
     })
   }
 
-
   render() {
     return (
-      <div>
-        <h1>Keebaht?</h1>
-        <h2>Who?
-          <input
-            type="text"
-            onChange={this.handleWho}
-          />
-        </h2>
-        <table class="ui olive table">
-          <thead>
-            <tr>
-              <th>Menu</th>
-              <th>#</th>
-            </tr>
-          </thead>
-          <tbody>
-          {this.state.menu.map((menu, index) =>(
-            <tr>
-              <td>{menu.name}</td>
-              <td>
-                <input
-                  type="text"
-                  onChange={ (e) => this.handleOnChange(index, e) }
-                />
-              </td>
-            </tr>
-          ))}
-          </tbody>
-          <tfoot>
-            <tr>
-              <td>Subtotal</td>
-              <td>{this.state.amountToPay}</td>
-            </tr>
-          </tfoot>
-        </table>
-        <button
-          class="ui secondary button"
-          onClick={this.handleOkay}
-        >
-          Okay
-        </button>
+      <div className="margin-main">
+        <Header />
+        <Container text>
+          <div>
+            <Form>
+              <Form.Group inline>
+                <Form.Field>
+                  <label>Who?</label>
+                  <Input
+                    onChange={this.handleWho}
+                  />
+                </Form.Field>
+              </Form.Group>
+            </Form>
+            <table class="ui olive table">
+              <thead>
+                <tr>
+                  <th>Menu</th>
+                  <th>#</th>
+                </tr>
+              </thead>
+              <tbody>
+              {this.state.menu.map((menu, index) =>(
+                <tr>
+                  <td>{menu.name}</td>
+                  <td>
+                    <div class="ui input focus">
+                      <input
+                        type="text"
+                        onChange={ (e) => this.handleOnChange(index, e) }
+                      />
+                    </div>
+                  </td>
+                </tr>
+              ))}
+              </tbody>
+              <tfoot>
+                <tr>
+                  <td>Total</td>
+                  <td>{this.state.amountToPay}</td>
+                </tr>
+              </tfoot>
+            </table>
+            <Link to='/summary'>
+              <button
+                class="ui secondary button"
+                onClick={this.handleOkay}
+              >
+                Okay
+              </button>
+            </Link>
+          </div>
+        </Container>
       </div>
     )
   }

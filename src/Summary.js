@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import { db } from './firebase'
-import Main from './Main'
 
 import './style.css'
+import Header from './Header'
 
 class Summary extends Component {
   state = {
@@ -49,9 +49,7 @@ class Summary extends Component {
                               </div>
                             </div>
                           ))}
-
                         </div>
-
                       </div>
                     </div>
                     <div class="extra content">
