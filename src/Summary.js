@@ -7,6 +7,7 @@ import Header from './Header'
 
 class Summary extends Component {
   state = {
+    id: '',
     payers: [],
     open: false,
   }
@@ -15,19 +16,60 @@ class Summary extends Component {
     db.collection('payers').get().then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
         this.setState(prevState => ({
-          payers: [{
-            username: doc.data().name,
-            amount: doc.data().amount,
-            menus: doc.data().menus,
-          }, ...prevState.payers
+          payers: [
+            {
+              id: doc.id,
+              username: doc.data().name,
+              amount: doc.data().amount,
+              menus: doc.data().menus,
+            },
+            ...prevState.payers
           ]
         }))
       })
     })
   }
+  
+  open = payerId => {
+    this.setState({
+      open: true,
+      id: payerId
+    })
+  }
+  close = () => {
+    this.setState({ open: false })
+  }
+  
+  handleDelete = () => {
+    const payerId = this.state.id
+    db.collection("payers").doc(payerId).delete().then(() => {
+     this.setState({ open: false })
+    }) 
+  }
 
-  open = () => this.setState({ open: true })
-  close = () => this.setState({ open: false })
+  componentDidUpdate(_, prevState) {
+    if (this.state.id && prevState.id === this.state.id && prevState.open !== this.state.open) {
+      this.setState({
+        payers: []
+      })
+      const payers = []
+      db.collection('payers').get().then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+          payers.push({
+            id: doc.id,
+            username: doc.data().name,
+            amount: doc.data().amount,
+            menus: doc.data().menus,
+          })
+        })
+        this.setState({
+          payers
+        })
+      })
+    }
+  }
+
+
 
   render() {
     return (
@@ -41,7 +83,7 @@ class Summary extends Component {
                   <div className="shadow ui card link card-section fluid">
                     <div className="content">
                       <h3 className="pay-username">{payer.username === '' ? 'Anonymous' : payer.username.toUpperCase()}
-                        <i class="trash-hover trash icon right floated" onClick={this.open} />
+                        <i class="trash-hover trash icon right floated" onClick={() => this.open(payer.id)} />
                       </h3>
                       <div className="ui description">
                         <div className="ui divided list">
@@ -70,7 +112,11 @@ class Summary extends Component {
             }
           </div>
         </div>
-        <Confirm open={this.state.open} onCancel={this.close} onConfirm={this.close} />
+        <Confirm 
+          open={this.state.open} 
+          onCancel={this.close} 
+          onConfirm={this.handleDelete}
+        />
       </div>
     )
   }
