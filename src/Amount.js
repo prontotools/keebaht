@@ -4,6 +4,7 @@ import { assoc, when, map, propEq } from 'ramda'
 import { Container, Button, Form, Input } from 'semantic-ui-react'
 import Header from './Header'
 import { db } from './firebase'
+import { List } from 'semantic-ui-react'
 
 class Amount extends Component {
   state = {
@@ -121,36 +122,31 @@ class Amount extends Component {
                 </Form.Field>
               </Form.Group>
             </Form>
-            <table class="ui shadow table">
-              <thead>
-                <tr>
-                  <th>Menu</th>
-                  <th>#</th>
-                </tr>
-              </thead>
-              <tbody>
-              {this.state.menus.map((menu) =>(
-                <tr>
-                  <td>{menu.name}</td>
-                  <td>
-                    <div class="ui input focus">
-                      <input
-                        type="text"
-                        onChange={e => this.handleOnChange(menu.id, e) }
-                      />
+           
+          </div>
+
+           <div className="ui shadow ui card link card-section fluid">
+             <List  divided relaxed >
+             {this.state.menus.map((menu) =>(
+                <List.Item >
+                  <List.Content>
+                    <div class="ui form">
+                    <List.Description as='p'>{menu.name}
+                    <div class="ui four wide field right floated">
+                      <input type="text" placeholder="Amount.." onChange={e => this.handleOnChange(menu.id, e) } />
                     </div>
-                  </td>
-                </tr>
-              ))}
-              </tbody>
-              <tfoot>
-                <tr>
-                  <td>Total</td>
-                  <td>{this.state.amountToPay}</td>
-                </tr>
-              </tfoot>
-            </table>
-            <Button
+                    </List.Description>
+                  </div>
+                  </List.Content>
+                  
+                </List.Item>
+                ))}
+   
+                </List>
+                
+                  <p>Total</p>
+                  <p>{this.state.amountToPay}</p>
+             <Button
               floated='right'
               size='big'
               color='grey'
@@ -158,8 +154,10 @@ class Amount extends Component {
             >
               Okay
             </Button>
-          </div>
+             </div>
+  
         </Container>
+       
       </div>
     )
   }
